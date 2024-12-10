@@ -1,0 +1,151 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Help - AI Mock Interview</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-image: url('https://miro.medium.com/v2/resize:fit:1024/1*nthhGGbFlzbwYwOvr43lgg.jpeg'); /* Added background image */
+            background-size: cover; /* Ensures the image covers the entire page */
+            background-position: center; /* Centers the image */
+            background-attachment: fixed; /* Keeps the background fixed when scrolling */
+        }
+        header {
+            background-color: transparent; /* Semi-transparent green */
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+        nav {
+            background-color: #4500a8;
+            padding: 10px 0;
+            text-align: center;
+        }
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin: 0 15px;
+            padding: 8px 12px;
+            border-radius: 5px;
+        }
+        nav a:hover {
+            background-color: #4500a8;
+        }
+        .container {
+            max-width: 900px;
+            margin: 30px auto;
+            background: rgba(255, 255, 255, 0.9); /* Semi-transparent white */
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+        h1, h2 {
+            color: #4500a8;
+        }
+        .faq {
+            margin-bottom: 20px;
+        }
+        .faq h3 {
+            margin: 0;
+            font-size: 1.2em;
+            cursor: pointer;
+            color: #333;
+        }
+        .faq p {
+            margin: 10px 0 0;
+            display: none;
+            font-size: 1em;
+            color: #555;
+        }
+        .faq.active p {
+            display: block;
+        }
+        footer {
+            text-align: center;
+            background-color:#4500a8 ;
+            color: white;
+            padding: 10px 0;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+        }
+        .back-buttons {
+            display: flex;
+            justify-content: center;
+            margin: 20px 0;
+        }
+        .back-buttons a {
+            background-color:#4500a8;
+            color: white;
+            padding: 10px 15px;
+            border-radius: 5px;
+            margin: 0 10px;
+            text-decoration: none;
+        }
+        .back-buttons a:hover {
+            background-color:darkblue;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Help & Support</h1>
+        <p>Your guide to using the AI Mock Interview Platform</p>
+    </header>
+
+    <!-- Navigation Bar -->
+    <nav>
+        <a href="/">Home</a>
+        <a href="/help">Help</a>
+        <a href="/about-us">About Us</a>
+        <a href="/interview-section">Interview Section</a>
+    </nav>
+
+    <!-- Help Content -->
+    <div class="container">
+        <h2>Frequently Asked Questions</h2>
+
+        <div class="faq">
+            <h3>How do I start a mock interview?</h3>
+            <p>To start a mock interview, navigate to the "Interview Section" from the navigation menu, fill out your details, select the type of interview, and click "Start Mock Interview."</p>
+        </div>
+
+        <div class="faq">
+            <h3>What types of interviews are available?</h3>
+            <p>We offer several types of interviews, including technical, HR, behavioral, and case study interviews. You can choose the type based on your needs during registration.</p>
+        </div>
+
+        <div class="faq">
+            <h3>Is the AI interview tailored to my experience level?</h3>
+            <p>Yes, our AI adapts the questions and scenarios based on your selected experience level: Fresher, Mid-Level, or Senior.</p>
+        </div>
+
+        <div class="faq">
+            <h3>How do I get feedback on my mock interview?</h3>
+            <p>After completing the mock interview, you'll receive detailed feedback with areas for improvement, tips, and a score breakdown.</p>
+        </div>
+    </div>
+
+    <!-- Back Buttons -->
+    <div class="back-buttons">
+        <a href="/">Back to Home</a>
+        <a href="/about-us">Back to About Us</a>
+    </div>
+
+    <footer>
+        <p>&copy; 2024 AI Mock Interview Platform. All rights reserved.</p>
+    </footer>
+
+    <script>
+        const faqs = document.querySelectorAll('.faq h3');
+        faqs.forEach(faq => {
+            faq.addEventListener('click', () => {
+                faq.parentElement.classList.toggle('active');
+            });
+        });
+    </script>
+</body>
+</html>

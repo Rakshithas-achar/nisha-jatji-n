@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Mock Interview</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background-color: #f4f4f9;
+        }
+
+        video {
+            width: 80%;
+            max-width: 600px;
+            border: 2px solid #ddd;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            margin: 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            background-color: #007bff;
+            color: white;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        #output {
+            margin-top: 20px;
+            width: 80%;
+            max-width: 600px;
+            border: 2px solid #ddd;
+            padding: 10px;
+            border-radius: 10px;
+            background: #fff;
+            height: 100px;
+            overflow-y: auto;
+        }
+    </style>
+</head>
+<body>
+    <h1>AI Mock Interview</h1>
+    <video id="camera" autoplay></video>
+    <button id="startInterview">Start Interview</button>
+    <button id="stopListening">Stop Listening</button>
+    <div id="output">Your responses will appear here...</div>
+
+    <script>
+        // Camera access
+        const videoElement = document.getElementById('camera');
+        navigator.mediaDevices.getUserMedia({ video: true, audio: true })
+            .then((stream) => {
+                videoElement.srcObject = stream;
+            })
+            .catch((error) => {
+                console.error('Error accessing camera and microphone:', error);
+            });
+
+        // Text-to-Speech (TTS) for questions
+        const speakText = (text) => {
+            const utterance = new SpeechSynthesisUtterance(text);
+            utterance.lang = 'en-US';
+            speechSynthesis.speak(utterance);
+        };
+
+        // Initialize variables
+        let currentQuestion = '';
+        let recognition;
+
+        // Function to fetch a question from the AI backend
+        const fetchQuestion = async () => {
+            try {
+                const response = await fetch('https://your-backend-url.com/generate-question'); // Replace with your backend URL
+                if (response.ok) {
+                    const data = await response.json();
+                    return data.question; // Assumes backend returns { question: "Your question here" }
+                } else {
+                    console.error('Error fetching question:', response.statusText);
+                    return "Unable to fetch a question. Please try again.";
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                return "Error connecting to the server.";
+            }
+        };
+
+        // Function to handle next question
+        const askNextQuestion = async () => {
+            currentQuestion = await fetchQuestion();
+            speakText(currentQuestion);
+        };
+
+        // Speech-to-Text (STT) for responses
+        const outputElement = document.getElementById('output');
+        const startButton = document.getElementById('startInterview');
+        const stopButton = document.getElementById('stopListening');
+
+        if ('webkitSpeechRecognition' in window) {
+            recognition = new webkitSpeechRecognition();
+            recognition.continuous = true;
+            recognition.interimResults = true;
+            recognition.lang = 'en-US';
+
+            recognition.onresult = (event) => {
+                let transcript = '';
+                for (let i = event.resultIndex; i < event.results.length; i++) {
+                    transcript += event.results[i][0].transcript;
+                }
+                outputElement.textContent = transcript;
+            };
+
+            recognition.onerror = (event) => {
+                console.error('Speech recognition error:', event.error);
+            };
+
+            recognition.onend = () => {
+                console.log('Speech recognition ended.');
+                askNextQuestion();
+            };
+        } else {
+            alert('Speech Recognition API is not supported in your browser.');
+        }
+
+        // Event Listeners
+        startButton.addEventListener('click', () => {
+            outputElement.textContent = "Your responses will appear here...";
+            askNextQuestion();
+            if (recognition) recognition.start();
+        });
+
+        stopButton.addEventListener('click', () => {
+            if (recognition) recognition.stop();
+        });
+    </script>
+</body>
+</html>
